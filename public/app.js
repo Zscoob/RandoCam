@@ -11,9 +11,14 @@ $('button.refresh').click((event) => {
     $title.text(webcam.title);
     $('title').text(webcam.title);
     $iframe.attr('src', `http://stream.webcams.travel/${webcam.id}`);
+    $('.like').prop('disabled',false);
   });
   request.open('GET', '/webcam/random');
   request.send();
 });
 
+$('.like').on('click', (event) => {
+  $('.like').siblings('form').submit();
+  $('.like').prop('disabled',true);
+});
 
