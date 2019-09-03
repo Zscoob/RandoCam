@@ -11,3 +11,5 @@ $('button.refresh').click((event) => {
   request.open('GET', '/webcam/random');
   request.send();
 });
+
+

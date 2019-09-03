@@ -19,3 +19,6 @@ h3.page-title {
 #content {
   padding-bottom: 5%;
 }
+.hidden {
+  display: none;
+}

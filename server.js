@@ -24,6 +24,15 @@
   }
 //http://stream.webcams.travel/1449975078 -- Roundabout
 //http://stream.webcams.travel/1454271431 -- Russia
+const savecams = (webcams) => {
+  const query='INSERT INTO webcams (id, title) VALUES($1, $2);';
+  webcams.forEach((webcam) => {
+    client.query(query,[webcam.id, webcam.title]).then(() => {
+      console.log('HELLO SCOTT')
+    })
+  });
+};
+
   const getWebcams = async (count = 3) => {
     const webcams = [];
     while (webcams.length < count) {
@@ -41,7 +50,9 @@
       const filteredCams = val.body.result.webcams.filter((webcam) => !webcam.title.match(/[\d\w\s\.]+: \w\d+,[\w\d\s\.\,]+.*− Km \d+,\d+/));
       webcams.push(...filteredCams);
     }
+    savecams(webcams)
     return webcams;
+
   };
 
   app.get('/', (request, response) => {
@@ -54,6 +65,10 @@
 
   app.get('/webcam/random', (request, response) => {
     getWebcams(1).then(([webcam]) => response.send(webcam));
+  })
+
+  app.post('/like', (request, response) => {
+    
   })
 
   app.post('*', (req, res) => handleError(res, 'Path not found...', 404));
