@@ -8,6 +8,11 @@
   <%- include('partials/header') %>
   <section id="content">
     <%- include('partials/webcam', {webcam: webcams[0], singleView: true}) %>
+    <ol class='commentList'>
+      <% comments.forEach((comment) => { %>
+      <%-  include('partials/comment' , {comment: comment}) %>
+      <% }) %>
+    </ol>
   </section>
 </body>
 </html>
