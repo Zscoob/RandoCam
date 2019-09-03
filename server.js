@@ -66,14 +66,19 @@ const savecams = (webcams) => {
 
   app.get('/random', (request, response) => {
     getWebcams(1).then((webcams) => response.render('random', {webcams: webcams}))
-  })
+  });
 
   app.get('/webcam/random', (request, response) => {
     getWebcams(1).then(([webcam]) => response.send(webcam));
-  })
+  });
 
   app.post('/like', (request, response) => {
     client.query('UPDATE webcams SET likes = likes + 1 WHERE id = $1;', [request.body.id]).then(()=>console.log('butt'))
+  });
+
+  app.post('/comment/:videoId', (request, response) => {
+    const query = 'INSERT INTO comments (video_id, text, handle) VALUES($1, $2, $3);';
+    client.query(query, [request.params.videoId, request.body.comment, request.body.handle]).then(() => console.log('We good'));
   })
 
   app.post('*', (req, res) => handleError(res, 'Path not found...', 404));

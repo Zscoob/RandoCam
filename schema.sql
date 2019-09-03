@@ -7,6 +7,7 @@ CREATE TABLE webcams (
 );
 
 CREATE TABLE comments(
+  id SERIAL PRIMARY KEY,
   video_id INTEGER NOT NULL REFERENCES webcams(id),
   text VARCHAR(1000),
   handle VARCHAR(20)

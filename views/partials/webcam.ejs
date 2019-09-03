@@ -1,12 +1,18 @@
 <section class='video-player'>
   <h3><%= webcam.title %></h3>
   <iframe src="http://stream.webcams.travel/<%= webcam.id %>" allowfullscreen width=800px height=600px></iframe>
-  <% if (refreshButton) { %>
+  <% if (singleView) { %>
     <br>
     <form id='<%=webcam.id%>' class='hidden' action='/like' method='POST'>
       <input type='number' name='id' value='<%= webcam.id %>'>
     </form>
     <input type='submit' form='<%=webcam.id%>' class='like' value='Like'>
     <button class='refresh'>Next</button>
+    <br>
+    <form id='comment-form' action='/comment/<%=webcam.id%>' method='POST'>
+      <input type='text' name='comment' placeholder='Leave a comment...'>
+      <input type='text' name='handle' placeholder='Name...'>
+      <input form='comment-form' type='submit' name='submit' value='Submit'>
+    </form>
   <% } %>
 </section>

@@ -4,10 +4,10 @@ $('button.refresh').click((event) => {
   var request = new XMLHttpRequest();
   request.addEventListener('load', (loadEvent) => {
     const webcam = JSON.parse(loadEvent.target.response);
-    const $form = $(event.target).siblings('form');
+    const $form = $(event.target).siblings('form.hidden');
     $form.attr('id', webcam.id);
     $form.children('input').attr('value', webcam.id);
-    $form.siblings('input[type=submit]').attr('form', webcam.id);
+    $form.siblings('input.like').attr('form', webcam.id);
     $title.text(webcam.title);
     $('title').text(webcam.title);
     $iframe.attr('src', `http://stream.webcams.travel/${webcam.id}`);

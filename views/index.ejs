@@ -9,7 +9,7 @@
   <section id="content">
     <ol>
       <% webcams.forEach(webcam => { %>
-        <li><%- include('partials/webcam', {webcam: webcam, refreshButton: false}) %></li>
+        <li><%- include('partials/webcam', {webcam: webcam, singleView: false}) %></li>
       <% }) %>
     </ol>
   </section>
