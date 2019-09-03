@@ -24,6 +24,7 @@
   }
 //http://stream.webcams.travel/1449975078 -- Roundabout
 //http://stream.webcams.travel/1454271431 -- Russia
+//"http://stream.webcams.travel/1562697756" -- BEARSSSS
 const savecams = (webcams) => {
   const query='INSERT INTO webcams (id, title) VALUES($1, $2) ON CONFLICT DO NOTHING;';
   webcams.forEach((webcam) => {
@@ -53,8 +54,14 @@ const savecams = (webcams) => {
 
   };
 
+  async function getWebcamsFromDB(count = 3){
+    const query = 'SELECT * FROM webcams ORDER BY likes DESC LIMIT $1;';
+    const results = await client.query(query, [count]);
+    return results.rows;
+  }
+
   app.get('/', (request, response) => {
-    getWebcams().then((webcams) => response.render('index', {webcams: webcams}));
+    getWebcamsFromDB().then((webcams) => response.render('index', {webcams: webcams}));
   });
 
   app.get('/random', (request, response) => {
