@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head') %>
+  <title>RandoCam</title>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <section id="content">
+    <ol>
+      <% webcams.forEach(webcam => { %>
+        <li><%- include('partials/webcam', {webcam: webcam, refreshButton: false}) %></li>
+      <% }) %>
+    </ol>
+  </section>
+</body>
+</html>

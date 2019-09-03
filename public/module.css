@@ -1,0 +1,35 @@
+.video-player {
+  overflow: hidden;
+  margin: auto;
+  margin-top: 1%;
+  width: 100%;
+  background-color: #222222;
+}
+
+.video-player iframe {
+  max-width: 80vw;
+  max-height: 100vw;
+  min-height: 55vmin;
+}
+
+.video-player h3 {
+  font-size: 250%;
+  margin-bottom: 1%;
+}
+
+.video-player button.refresh {
+  padding: 4%;
+  background-color: #010101;
+  color: #AFAFAF;
+  border-radius: 15px;
+  font-size: 250%;
+  border: none;
+  transition-duration: .666s;
+}
+
+
+.video-player button.refresh:hover {
+  color: #FFFFFF;
+  text-shadow: 0 0 5px #0F0;
+  font-size: 275%;
+}

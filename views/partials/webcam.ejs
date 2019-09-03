@@ -1,0 +1,9 @@
+<section class='video-player'>
+  <h3><%= webcam.title %></h3>
+  <iframe src="http://stream.webcams.travel/<%= webcam.id %>" allowfullscreen width=800px height=600px></iframe>
+  <% if (refreshButton) { %>
+    <br>
+    <button class='refresh'>Next</button>
+  <% } %>
+<!--<iframe src="<%=webcam.player.live.embed%>" width=320 height=200></iframe>-->
+</section>

@@ -1,0 +1,21 @@
+body {
+  color:lawngreen;
+  background-color: #7F7F7F;
+}
+
+#header {
+  background-color: black;
+}
+
+#header h1 {
+  color: #0F0;
+}
+
+h3.page-title {
+  background-color: #222222;
+  text-align: center;
+}
+
+#content {
+  padding-bottom: 5%;
+}

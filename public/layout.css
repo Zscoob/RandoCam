@@ -1,0 +1,27 @@
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10vh;
+  background-color: black;
+  z-index: 1000;
+}
+
+#content {
+  transform: translateY(10vh);
+  text-align: center;
+}
+
+#nav {
+  float: right;
+}
+
+h1 {
+  font-size: 300%;
+}
+
+h3.page-title {
+  min-width: 100%;
+  font-size: 150%;
+}
