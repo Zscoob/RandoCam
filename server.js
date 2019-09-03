@@ -25,11 +25,9 @@
 //http://stream.webcams.travel/1449975078 -- Roundabout
 //http://stream.webcams.travel/1454271431 -- Russia
 const savecams = (webcams) => {
-  const query='INSERT INTO webcams (id, title) VALUES($1, $2);';
+  const query='INSERT INTO webcams (id, title) VALUES($1, $2) ON CONFLICT DO NOTHING;';
   webcams.forEach((webcam) => {
-    client.query(query,[webcam.id, webcam.title]).then(() => {
-      console.log('HELLO SCOTT')
-    })
+    client.query(query,[webcam.id, webcam.title])
   });
 };
 
@@ -68,7 +66,7 @@ const savecams = (webcams) => {
   })
 
   app.post('/like', (request, response) => {
-    
+    client.query('UPDATE webcams SET likes = likes + 1 WHERE id = $1;', [request.body.id]).then(()=>console.log('butt'))
   })
 
   app.post('*', (req, res) => handleError(res, 'Path not found...', 404));
