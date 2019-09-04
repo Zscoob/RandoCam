@@ -73,6 +73,17 @@
     return results.rows;
   }
 
+  async function attachComments(webcam){
+    const query = 'SELECT * FROM comments WHERE video_id = $1;';
+    const results = await client.query(query, [webcam.id]);
+    webcam.comments = results.rows;
+    return webcam;
+  }
+
+  async function attachCommentsToMultiple(webcams){
+    return await Promise.all(webcams.map(webcam => attachComments(webcam)));
+  }
+
   app.get('/', (request, response) => {
     try {
       response.render('index');
@@ -93,7 +104,11 @@
     try {
       console.log(request.params);
       if (request.params.id === 'random'){
-        getWebcams(request.query.count || 1).then((webcams) => response.send(webcams));
+        getWebcams(request.query.count || 1).then((webcams) => {
+           attachCommentsToMultiple(webcams).then(results => {
+            response.send(results);
+          });
+        });
       } else if (request.params.id === 'top') {
         console.log('Were getting tops');
         getWebcamsFromDB(3).then((webcams) => response.send(webcams));

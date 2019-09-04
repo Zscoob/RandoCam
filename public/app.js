@@ -14,7 +14,10 @@ function createWebcamViewer(webcam, showButtons = false) {
   <input type='text' name='comment' placeholder='Leave a comment...'>
   <input type='text' name='handle' placeholder='Name...'>
   <input type='submit' name='submit' value='Submit'>
-</form>`);
+</form>
+<br>
+<ol class='commentSection'>
+</ol>`);
     $viewer.append($form);
     setupEvents($viewer);
   }
@@ -59,7 +62,7 @@ function setupEvents($viewer) {
     const comment = $commentForm.children('input[name=comment]').val();
     const handle = $commentForm.children('input[name=handle]').val();
     if(!comment || !handle){
-      alert('Fill out form, please.');
+      alert('Comment form empty');
       return;
     }
     const xhr = new XMLHttpRequest();
