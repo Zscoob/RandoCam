@@ -2,7 +2,8 @@
 function createWebcamViewer(webcam, showButtons = false) {
   const $viewer = $(`<section class='video-player'>
   <h3>${webcam.title}</h3>
-  <iframe src="http://stream.webcams.travel/${webcam.id}" sandbox="allow-same-origin allow-scripts allow-forms" allowfullscreen width=800px height=600px></iframe>
+  <iframe src="http://stream.webcams.travel/${webcam.id}" sandbox="allow-same-origin allow-scripts allow-forms" allowfullscreen width=800px height=600px></iframe><br>
+  <p class='like-counter'></p>
 </section>`);
   if (showButtons) {
     const $form = $(`<br>
@@ -18,10 +19,32 @@ function createWebcamViewer(webcam, showButtons = false) {
 <br>
 <ol class='commentSection'>
 </ol>`);
+    const $commentSection = $form.siblings('.commentSection');
+    webcam.comments.forEach(comment => {
+      $commentSection.append(createCommentTag(comment));
+    });
     $viewer.append($form);
     setupEvents($viewer);
+  } else {
+    const $viewbutton = $('<button class=\'view-button\'>View</button>');
+    $viewbutton.click(() => {
+      window.location = `/watch?id=${webcam.id}`;
+    });
+    $viewer.append($viewbutton);
   }
+  const likes = webcam.likes || 0;
+  $viewer.children('.like-counter').text(`${likes} likes`);
+  console.log($('.commentSection').children());
   return $viewer;
+}
+
+function createCommentTag(comment) {
+  return $(`
+  <article class='comment'>
+    <p class='comment'>${comment.text}</p>
+    <br>
+    <p class='handle'>${comment.handle}</p>
+  </article>`);
 }
 
 function setupEvents($viewer) {
@@ -31,6 +54,8 @@ function setupEvents($viewer) {
   const $like = $viewer.children('button.like');
   const $refresh = $viewer.children('button.refresh');
   const $commentForm = $viewer.children('.comment-form');
+  const $commentSection = $viewer.children('.commentSection');
+  const $likeCounter = $viewer.children('.like-counter');
 
   $refresh.click(() => {
     const xhr = new XMLHttpRequest();
@@ -41,15 +66,20 @@ function setupEvents($viewer) {
       $hiddenInput.val(webcam.id);
       $like.prop('disabled', false);
       $commentForm.children('input[placeholder]').val('');
+      $commentSection.empty();
+      webcam.comments.forEach(comment => {
+        $commentSection.append(createCommentTag(comment));
+      });
+      $likeCounter.text(`${webcam.likes || 0} likes`);
     });
     xhr.open('GET', '/webcam/random');
     xhr.send();
-  })
+  });
   
   $like.click(() => {
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', () => {
-      console.log('Submitted Like');
+      $likeCounter.text(`${parseInt($likeCounter.text()) + 1} likes`);
     });
     xhr.open('POST', '/like');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -67,7 +97,7 @@ function setupEvents($viewer) {
     }
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', () => {
-      console.log('Saved comment');
+      $commentSection.prepend(createCommentTag({text: comment, handle: handle}));
       $commentForm.children('input[placeholder]').val('');
     });
     xhr.open('POST', `/comment/${$hiddenInput.val()}`);

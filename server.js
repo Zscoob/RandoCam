@@ -35,7 +35,7 @@
   };
 
   const getComments = async (videoId) => {
-    const query = 'SELECT * FROM comments WHERE video_id = $1;'
+    const query = 'SELECT * FROM comments WHERE video_id = $1 ORDER BY timeStamp DESC LIMIT 20;'
     const response = await client.query(query, [videoId])
     return response.rows;
   }
@@ -74,9 +74,7 @@
   }
 
   async function attachComments(webcam){
-    const query = 'SELECT * FROM comments WHERE video_id = $1;';
-    const results = await client.query(query, [webcam.id]);
-    webcam.comments = results.rows;
+    await getComments(webcam.id).then(comments => webcam.comments = comments);
     return webcam;
   }
 
@@ -102,18 +100,19 @@
 
   app.get('/webcam/:id', (request, response) => {
     try {
-      console.log(request.params);
       if (request.params.id === 'random'){
+        console.log('Fetching random');
         getWebcams(request.query.count || 1).then((webcams) => {
            attachCommentsToMultiple(webcams).then(results => {
             response.send(results);
           });
         });
       } else if (request.params.id === 'top') {
-        console.log('Were getting tops');
-        getWebcamsFromDB(3).then((webcams) => response.send(webcams));
+        console.log('Fetching top');
+        getWebcamsFromDB(3).then(webcams => attachCommentsToMultiple(webcams).then(webcams => response.send(webcams)));
       } else {
-        getWebcamFromDB(request.params.id).then(([webcam]) => response.send(webcam));
+        console.log('Fetching from DB');
+        getWebcamFromDB(request.params.id).then(([webcam]) => attachComments(webcam).then(webcam => response.send(webcam)));
       }
     } catch (error) {
       handleError(response, error);

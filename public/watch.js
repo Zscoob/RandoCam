@@ -8,3 +8,12 @@ function showRandom() {
     });
   });
 }
+
+function show(id) {
+  const $content = $('#content');
+  $content.empty();
+  getWebcam(id, (event) => {
+    const webcam = JSON.parse(event.currentTarget.response);
+    $content.append(createWebcamViewer(webcam, true));
+  });
+}
