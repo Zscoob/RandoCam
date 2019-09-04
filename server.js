@@ -25,6 +25,7 @@
   //http://stream.webcams.travel/1449975078 -- Roundabout
   //http://stream.webcams.travel/1454271431 -- Russia
   //"http://stream.webcams.travel/1562697756" -- BEARSSSS
+  //http://stream.webcams.travel/1430559514 -- Russian pool?
 
   const savecams = (webcams) => {
     const query = 'INSERT INTO webcams (id, title) VALUES($1, $2) ON CONFLICT DO NOTHING;';
@@ -56,7 +57,7 @@
       const filteredCams = val.body.result.webcams.filter((webcam) => !webcam.title.match(/[\d\w\s\.]+: \w\d+,[\w\d\s\.\,]+.*− Km \d+,\d+/));
       webcams.push(...filteredCams);
     }
-    savecams(webcams)
+    savecams(webcams);
     return webcams;
   };
 
@@ -74,34 +75,33 @@
 
   app.get('/', (request, response) => {
     try {
-      getWebcamsFromDB().then((webcams) => response.render('index', { webcams: webcams }));
+      response.render('index');
     } catch (error) {
-      handleError(error);
+      handleError(response, error);
     }
   });
 
   app.get('/watch', (request, response) => {
     try {
-      getWebcams(1).then((webcams) => {
-        getComments(webcams[0].id).then(comments => {
-          response.render('watch', { webcams: webcams, comments: comments });
-        });
-      });
+      response.render('watch', {videoId: request.query.id || 0});
     } catch (error) {
-      handleError(error);
+      handleError(response, error);
     }
   });
 
   app.get('/webcam/:id', (request, response) => {
     try {
-    
-      if (request.params.id ==='random'){
-        getWebcams(1).then(([webcam]) => response.send(webcam));
+      console.log(request.params);
+      if (request.params.id === 'random'){
+        getWebcams(request.query.count || 1).then((webcams) => response.send(webcams));
+      } else if (request.params.id === 'top') {
+        console.log('Were getting tops');
+        getWebcamsFromDB(3).then((webcams) => response.send(webcams));
       } else {
         getWebcamFromDB(request.params.id).then(([webcam]) => response.send(webcam));
       }
     } catch (error) {
-      handleError(error);
+      handleError(response, error);
     }
   });
 
@@ -110,7 +110,7 @@
       client.query('UPDATE webcams SET likes = likes + 1 WHERE id = $1;', [request.body.id]);
       response.status(201).send();
     } catch (error) {
-      handleError(error);
+      handleError(response, error);
     }
   });
 
@@ -120,7 +120,7 @@
       client.query(query, [request.params.videoId, request.body.comment, request.body.handle, Date.now()]);
       response.status(201).send();
     } catch (error) {
-      handleError(error);
+      handleError(response, error);
     }
   })
 
@@ -130,7 +130,7 @@
         response.send(comments);
       });
     } catch (error) {
-      handleError(error);
+      handleError(response, error);
     }
   });
 

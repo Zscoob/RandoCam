@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head') %>
+  <script src='watch.js'></script>
+  <title>Watch</title>
+</head>
+
+<body>
+  <%- include('partials/header') %>
+  <section id="content">
+  </section>
+</body>
+<script defer>
+  <% if (videoId === 0) { %>
+    showRandom();
+  <% } else { %>
+    show('<%= videoId %>');
+  <% } %>
+</script>
+
+</html>

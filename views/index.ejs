@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
   <%- include('partials/head') %>
+  <script defer src="index.js"></script>
   <title>RandoCam</title>
 </head>
 <body>
   <%- include('partials/header') %>
   <section id="content">
-    <ol>
-      <% webcams.forEach(webcam => { %>
-        <li><%- include('partials/webcam', {webcam: webcam, singleView: false}) %></li>
-      <% }) %>
+    <ol id="webcams">
     </ol>
   </section>
 </body>
