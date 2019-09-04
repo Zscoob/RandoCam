@@ -26,18 +26,18 @@
   //http://stream.webcams.travel/1454271431 -- Russia
   //"http://stream.webcams.travel/1562697756" -- BEARSSSS
 
-  const getComments = async (videoId) => {
-    const query = 'SELECT * FROM comments WHERE video_id = $1'
-    const response = await client.query(query, [videoId])
-    return response.rows;
-  }
-
   const savecams = (webcams) => {
     const query = 'INSERT INTO webcams (id, title) VALUES($1, $2) ON CONFLICT DO NOTHING;';
     webcams.forEach((webcam) => {
       client.query(query, [webcam.id, webcam.title])
     });
   };
+
+  const getComments = async (videoId) => {
+    const query = 'SELECT * FROM comments WHERE video_id = $1;'
+    const response = await client.query(query, [videoId])
+    return response.rows;
+  }
 
   const getWebcams = async (count = 3) => {
     const webcams = [];
@@ -58,7 +58,6 @@
     }
     savecams(webcams)
     return webcams;
-
   };
 
   async function getWebcamsFromDB(count = 3) {
@@ -68,34 +67,60 @@
   }
 
   app.get('/', (request, response) => {
-    getWebcamsFromDB().then((webcams) => response.render('index', { webcams: webcams }));
+    try {
+      getWebcamsFromDB().then((webcams) => response.render('index', { webcams: webcams }));
+    } catch (error) {
+      handleError(error);
+    }
   });
 
   app.get('/random', (request, response) => {
-    getWebcams(1).then((webcams) => {
-      getComments(webcams[0].id).then(comments => {
-        response.render('random', { webcams: webcams, comments: comments });
+    try {
+      getWebcams(1).then((webcams) => {
+        getComments(webcams[0].id).then(comments => {
+          response.render('random', { webcams: webcams, comments: comments });
+        });
       });
-    });
+    } catch (error) {
+      handleError(error);
+    }
   });
 
   app.get('/webcam/random', (request, response) => {
-    getWebcams(1).then(([webcam]) => response.send(webcam));
+    try {
+      getWebcams(1).then(([webcam]) => response.send(webcam));
+    } catch (error) {
+      handleError(error);
+    }
   });
 
   app.post('/like', (request, response) => {
-    client.query('UPDATE webcams SET likes = likes + 1 WHERE id = $1;', [request.body.id])
+    try {
+      client.query('UPDATE webcams SET likes = likes + 1 WHERE id = $1;', [request.body.id]);
+      response.status(201).send();
+    } catch (error) {
+      handleError(error);
+    }
   });
 
   app.post('/comment/:videoId', (request, response) => {
-    const query = 'INSERT INTO comments (video_id, text, handle, timeStamp) VALUES($1, $2, $3, $4);';
-    client.query(query, [request.params.videoId, request.body.comment, request.body.handle, Date.now()])
+    try {
+      const query = 'INSERT INTO comments (video_id, text, handle, timeStamp) VALUES($1, $2, $3, $4);';
+      client.query(query, [request.params.videoId, request.body.comment, request.body.handle, Date.now()]);
+      response.status(201).send();
+    } catch (error) {
+      handleError(error);
+    }
   })
 
   app.get('/comment/:videoId', (request, response) => {
-    getComments(request.params.videoId).then((comments) => {
-      response.send(comments);
-    });
+    try {
+      getComments(request.params.videoId).then((comments) => {
+        response.send(comments);
+      });
+    } catch (error) {
+      handleError(error);
+    }
   });
 
   app.post('*', (req, res) => handleError(res, 'Path not found...', 404));
