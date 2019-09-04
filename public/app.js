@@ -56,7 +56,12 @@ function setupEvents($viewer) {
 
   $commentForm.submit((event) => {
     event.preventDefault();
-    console.log('Yas');
+    const comment = $commentForm.children('input[name=comment]').val();
+    const handle = $commentForm.children('input[name=handle]').val();
+    if(!comment || !handle){
+      alert('Fill out form, please.');
+      return;
+    }
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', () => {
       console.log('Saved comment');
@@ -64,7 +69,7 @@ function setupEvents($viewer) {
     });
     xhr.open('POST', `/comment/${$hiddenInput.val()}`);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(`comment=${$commentForm.children('input[name=comment]').val()}&handle=${$commentForm.children('input[name=handle]').val()}`);
+    xhr.send(`comment=${comment}&handle=${handle}`);
   });
 }
 
