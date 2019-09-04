@@ -66,6 +66,12 @@
     return results.rows;
   }
 
+  async function getWebcamFromDB(id) {
+    const query = 'SELECT * FROM webcams WHERE id = $1;';
+    const results = await client.query(query, [id]);
+    return results.rows;
+  }
+
   app.get('/', (request, response) => {
     try {
       getWebcamsFromDB().then((webcams) => response.render('index', { webcams: webcams }));
@@ -74,11 +80,11 @@
     }
   });
 
-  app.get('/random', (request, response) => {
+  app.get('/watch', (request, response) => {
     try {
       getWebcams(1).then((webcams) => {
         getComments(webcams[0].id).then(comments => {
-          response.render('random', { webcams: webcams, comments: comments });
+          response.render('watch', { webcams: webcams, comments: comments });
         });
       });
     } catch (error) {
@@ -86,9 +92,14 @@
     }
   });
 
-  app.get('/webcam/random', (request, response) => {
+  app.get('/webcam/:id', (request, response) => {
     try {
-      getWebcams(1).then(([webcam]) => response.send(webcam));
+    
+      if (request.params.id ==='random'){
+        getWebcams(1).then(([webcam]) => response.send(webcam));
+      } else {
+        getWebcamFromDB(request.params.id).then(([webcam]) => response.send(webcam));
+      }
     } catch (error) {
       handleError(error);
     }
