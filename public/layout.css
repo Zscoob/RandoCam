@@ -11,6 +11,7 @@
 #content {
   transform: translateY(10vh);
   text-align: center;
+  pointer-events: none;
 }
 
 #nav {
@@ -33,15 +34,17 @@ h3.page-title {
   width: 200vw;
   height: 100vh;
   display: grid;
-  grid-template: repeat(20, 1fr) / repeat(50, 1fr);
-  z-index: -1;
-}
-
-#dream a{
+  grid-template: repeat(15, 1fr) / repeat(30, 1fr);
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   animation-name: dream;
-  animation-duration: 120000ms;
+  animation-duration: 60000ms;
+  z-index: 0;
+}
+
+#dream a{
+  grid-column: span 1;
+  grid-row: span 1;
   color: #AFAFAFAF;
   text-decoration: none;
 }

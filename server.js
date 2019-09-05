@@ -85,7 +85,7 @@
   }
 
   async function getDreamField(){
-    const dreamfieldWidth = 500;
+    const dreamfieldWidth = 225;
     const query = `SELECT * FROM dreamField ORDER BY id DESC LIMIT ${dreamfieldWidth};`;
     const result = await client.query(query);
     const dreamField = await Promise.all(result.rows.map(async (comment) => {
@@ -101,7 +101,7 @@
 
   function addToDreamfield(statements) {
     statements.forEach(statement => {
-      
+
     });
   }
 

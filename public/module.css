@@ -5,6 +5,7 @@
   margin-bottom: 9%;
   width: 60vw;
   background-color: #222222;
+  pointer-events: all;
 }
 
 .video-player:last-child {
