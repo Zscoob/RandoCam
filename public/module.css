@@ -19,25 +19,36 @@
 }
 
 .video-player h3 {
-  font-size: 250%;
+  margin-top: 3%;
+  font-size: 200%;
   margin-bottom: 1%;
 }
 
-.video-player button.refresh, .video-player button.like {
-  padding: 4%;
-  background-color: #010101;
-  color: #AFAFAF;
+.video-player button.refresh, .video-player button.like, .comment-form input[type=submit]{
+  padding: 0% 5% 0% 5%;
+  background-color:  #7F7F7F;
+  color: honeydew;
   border-radius: 15px;
-  font-size: 250%;
+  font-size: 200%;
   border: none;
   transition-duration: .666s;
+  margin-top: 1%;
+  margin-left: 1.25%;
+  margin-bottom: 2.5%;
+  float: left;
+
+}
+.comment-form input[type=submit]{
+float: right;
+}
+.video-player button:first-of-type{
+  margin-left: 5%;
 }
 
+.video-player button.refresh:hover, .video-player button.like:hover, .comment-form input[type=submit]:hover{
+  color: honeydew;
+  text-shadow: 0 0 10px #0F0;
 
-.video-player button.refresh:hover {
-  color: #FFFFFF;
-  text-shadow: 0 0 5px #0F0;
-  font-size: 275%;
 }
 
 /*<form class='comment-form'>
@@ -46,8 +57,41 @@
   <input type='submit' name='submit' value='Submit'>
 </form>*/
 
-.comment-form input[name='comment']{
-  width: 75%;
-  height: 5vh;
+.comment-form input[name='comment'],.comment-form input[name='handle'] {
+  background-color: black;
+  color: honeydew;
+  border-color: honeydew;
+  font-size: 150%;
   text-align: left;
+  border-width: 0.5%;
+  border-style: solid;
+}
+
+.comment-form input::placeholder {
+  color: white;
+}
+.comment-form input[name='comment']{
+  width: 100%;
+  margin-bottom: 1%;
+}
+.comment-form {
+  text-align: left;
+
+}
+
+p.like-counter{
+  color:honeydew;
+  font-size:200%;
+  float: right;
+  margin-right: 5%;
+  overflow: none;
+  margin-top: 1.50%;
+}
+
+.videoContent{
+  width: 800px;
+  max-width: 80vw;
+  max-height: 100vw;
+  min-height: 55vmin;
+  margin: 0 auto;
 }

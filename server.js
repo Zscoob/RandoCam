@@ -28,6 +28,9 @@
   //http://stream.webcams.travel/1430559514 -- Russian pool?
   //http://stream.webcams.travel/1560363232 -- cox beach
   //http://stream.webcams.travel/1550639374 -- windsurfer beach hawaii
+  //http://stream.webcams.travel/1548714605 --
+  //http://stream.webcams.travel/1499739060 --
+  //http://stream.webcams.travel/1498986660 -- Africa watering hole
 
   const savecams = (webcams) => {
     const query = 'INSERT INTO webcams (id, title) VALUES($1, $2) ON CONFLICT DO NOTHING;';

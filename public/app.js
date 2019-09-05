@@ -2,12 +2,13 @@
 function createWebcamViewer(webcam, showButtons = false) {
   const $viewer = $(`<section class='video-player'>
   <h3>${webcam.title}</h3>
-  <iframe src="http://stream.webcams.travel/${webcam.id}" sandbox="allow-same-origin allow-scripts allow-forms" allowfullscreen width=800px height=600px></iframe><br>
+  <section class='videoContent'>
+  <iframe src="http://stream.webcams.travel/${webcam.id}" sandbox="allow-same-origin allow-scripts allow-forms" allowfullscreen width=800px height=600px></iframe>
   <p class='like-counter'></p>
+  </section>
 </section>`);
 
-  $viewer.children('iframe')
-  .find('img').css({'max-width': '80vw', 'min-width': '100%'});
+  
   if (showButtons) {
     const $form = $(`<br>
     <input type='number' class='hidden' value=${webcam.id}>
@@ -26,7 +27,7 @@ function createWebcamViewer(webcam, showButtons = false) {
     webcam.comments.forEach(comment => {
       $commentSection.append(createCommentTag(comment));
     });
-    $viewer.append($form);
+    $viewer.children('.videoContent').append($form);
     setupEvents($viewer);
   } else {
     const $viewbutton = $('<button class=\'view-button\'>View</button>');
@@ -36,7 +37,7 @@ function createWebcamViewer(webcam, showButtons = false) {
     $viewer.append($viewbutton);
   }
   const likes = webcam.likes || 0;
-  $viewer.children('.like-counter').text(`${likes} likes`);
+  $viewer.find('.like-counter').text(`${likes} likes`);
   return $viewer;
 }
 
@@ -50,14 +51,14 @@ function createCommentTag(comment) {
 }
 
 function setupEvents($viewer) {
-  const $iframe = $viewer.children('iframe');
-  const $title = $viewer.children('h3');
-  const $hiddenInput = $viewer.children('input.hidden');
-  const $like = $viewer.children('button.like');
-  const $refresh = $viewer.children('button.refresh');
-  const $commentForm = $viewer.children('.comment-form');
-  const $commentSection = $viewer.children('.commentSection');
-  const $likeCounter = $viewer.children('.like-counter');
+  const $iframe = $viewer.find('iframe');
+  const $title = $viewer.find('h3');
+  const $hiddenInput = $viewer.find('input.hidden');
+  const $like = $viewer.find('button.like');
+  const $refresh = $viewer.find('button.refresh');
+  const $commentForm = $viewer.find('.comment-form');
+  const $commentSection = $viewer.find('.commentSection');
+  const $likeCounter = $viewer.find('.like-counter');
 
   $refresh.click(() => {
     const xhr = new XMLHttpRequest();

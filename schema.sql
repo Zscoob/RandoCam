@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS webcams, comments;
+DROP TABLE IF EXISTS webcams, comments, dreamField, blackList;
 
 CREATE TABLE webcams (
   id INTEGER PRIMARY KEY,
