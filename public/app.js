@@ -19,6 +19,7 @@ function createWebcamViewer(webcam, showButtons = false) {
 <br>
 <ol class='commentSection'>
 </ol>`);
+    console.log(webcam.comments);
     const $commentSection = $form.siblings('.commentSection');
     webcam.comments.forEach(comment => {
       $commentSection.append(createCommentTag(comment));
@@ -109,7 +110,7 @@ function setupEvents($viewer) {
 function getWebcam(id, callback) {
   const xhr = new XMLHttpRequest();
   xhr.addEventListener('load', callback);
-  xhr.open('GET', `/webcam/${id}`);
+  xhr.open('GET', `/webcam/${Number(id) || 'random'}`);
   xhr.send();
 }
 

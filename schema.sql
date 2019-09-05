@@ -13,3 +13,11 @@ CREATE TABLE comments(
   handle VARCHAR(20),
   timeStamp BIGINT
 );
+
+CREATE TABLE dreamField(
+  id INTEGER NOT NULL REFERENCES comments(id)
+);
+
+CREATE TABLE blackList(
+  video_id INTEGER NOT NULL REFERENCES webcams(id)
+);

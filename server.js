@@ -74,7 +74,8 @@
     return results.rows;
   }
 
-  async function attachComments(webcam){
+  async function attachComments(webcam) {
+    console.log(webcam);
     await getComments(webcam.id).then(comments => webcam.comments = comments);
     return webcam;
   }
@@ -83,9 +84,23 @@
     return await Promise.all(webcams.map(webcam => attachComments(webcam)));
   }
 
+  async function getDreamField(){
+    const query = 'SELECT * FROM dreamField ORDER BY id DESC LIMIT 50;';
+    const result = await client.query(query);
+    const dreamField = await Promise.all(result.rows.map(async (comment) => {
+      const query = 'SELECT * FROM comments WHERE id = $1;';
+      const result = await client.query(query, [comment.id]);
+      return result.rows[0];
+    }));
+      while (dreamField.length < 50){
+        dreamField.push({text:'random', video_id:0});
+      }
+      return dreamField;
+  };
+
   app.get('/', (request, response) => {
     try {
-      response.render('index');
+      getDreamField().then(dreamfield => response.render('index', { dreamField: dreamfield }));
     } catch (error) {
       handleError(response, error);
     }
@@ -93,7 +108,7 @@
 
   app.get('/watch', (request, response) => {
     try {
-      response.render('watch', {videoId: request.query.id || 0});
+      response.render('watch', {videoId: request.query.id || 0, dreamField:getDreamField()});
     } catch (error) {
       handleError(response, error);
     }
@@ -110,10 +125,16 @@
         });
       } else if (request.params.id === 'top') {
         console.log('Fetching top');
-        getWebcamsFromDB(3).then(webcams => attachCommentsToMultiple(webcams).then(webcams => response.send(webcams)));
+        getWebcamsFromDB(3).then(webcams => attachCommentsToMultiple(webcams).then(webcams => {
+            response.send(webcams);
+        }));
       } else {
         console.log('Fetching from DB');
-        getWebcamFromDB(request.params.id).then(([webcam]) => attachComments(webcam).then(webcam => response.send(webcam)));
+        getWebcamFromDB(request.params.id).then(([webcam]) => {
+          attachComments(webcam).then(webcam => {
+            response.send(webcam);
+          });
+        });
       }
     } catch (error) {
       handleError(response, error);
@@ -131,13 +152,18 @@
 
   app.post('/comment/:videoId', (request, response) => {
     try {
-      const query = 'INSERT INTO comments (video_id, text, handle, timeStamp) VALUES($1, $2, $3, $4);';
-      client.query(query, [request.params.videoId, request.body.comment, request.body.handle, Date.now()]);
+      const query = 'INSERT INTO comments (video_id, text, handle, timeStamp) VALUES($1, $2, $3, $4) RETURNING id;';
+      client.query(query, [request.params.videoId, request.body.comment, request.body.handle, Date.now()]).then(result=> {
+        if (request.body.comment.match(/^([\w\d]+\s?){1,3}$/i)){
+          const query = 'INSERT INTO dreamField (id) VALUES ($1);';
+          client.query(query, [result.rows[0].id]);  
+        }
+      });
       response.status(201).send();
     } catch (error) {
       handleError(response, error);
     }
-  })
+  });
 
   app.get('/comment/:videoId', (request, response) => {
     try {

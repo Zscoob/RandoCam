@@ -13,7 +13,7 @@
   </section>
 </body>
 <script defer>
-  <% if (videoId === 0) { %>
+  <% if (Number(videoId) === 0) { %>
     showRandom();
   <% } else { %>
     show('<%= videoId %>');
