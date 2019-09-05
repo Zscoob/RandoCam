@@ -5,6 +5,9 @@ function createWebcamViewer(webcam, showButtons = false) {
   <iframe src="http://stream.webcams.travel/${webcam.id}" sandbox="allow-same-origin allow-scripts allow-forms" allowfullscreen width=800px height=600px></iframe><br>
   <p class='like-counter'></p>
 </section>`);
+
+  $viewer.children('iframe')
+  .find('img').css({'max-width': '80vw', 'min-width': '100%'});
   if (showButtons) {
     const $form = $(`<br>
     <input type='number' class='hidden' value=${webcam.id}>
@@ -19,7 +22,6 @@ function createWebcamViewer(webcam, showButtons = false) {
 <br>
 <ol class='commentSection'>
 </ol>`);
-    console.log(webcam.comments);
     const $commentSection = $form.siblings('.commentSection');
     webcam.comments.forEach(comment => {
       $commentSection.append(createCommentTag(comment));
@@ -35,7 +37,6 @@ function createWebcamViewer(webcam, showButtons = false) {
   }
   const likes = webcam.likes || 0;
   $viewer.children('.like-counter').text(`${likes} likes`);
-  console.log($('.commentSection').children());
   return $viewer;
 }
 

@@ -25,3 +25,32 @@ h3.page-title {
   min-width: 100%;
   font-size: 150%;
 }
+
+#dream {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 100vh;
+  display: grid;
+  grid-template: repeat(20, 1fr) / repeat(50, 1fr);
+  z-index: -1;
+}
+
+#dream a{
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: dream;
+  animation-duration: 120000ms;
+  color: #AFAFAFAF;
+  text-decoration: none;
+}
+
+@keyframes dream {
+0% {
+  transform: translateX(00);
+}
+100% {
+  transform: translateX(-100vw);
+}
+}

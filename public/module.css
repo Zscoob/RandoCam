@@ -2,8 +2,13 @@
   overflow: hidden;
   margin: auto;
   margin-top: 1%;
-  width: 100%;
+  margin-bottom: 9%;
+  width: 60vw;
   background-color: #222222;
+}
+
+.video-player:last-child {
+  margin-bottom: 5%;
 }
 
 .video-player iframe {

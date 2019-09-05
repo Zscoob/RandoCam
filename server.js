@@ -76,7 +76,6 @@
   }
 
   async function attachComments(webcam) {
-    console.log(webcam);
     await getComments(webcam.id).then(comments => webcam.comments = comments);
     return webcam;
   }
@@ -86,18 +85,25 @@
   }
 
   async function getDreamField(){
-    const query = 'SELECT * FROM dreamField ORDER BY id DESC LIMIT 50;';
+    const dreamfieldWidth = 500;
+    const query = `SELECT * FROM dreamField ORDER BY id DESC LIMIT ${dreamfieldWidth};`;
     const result = await client.query(query);
     const dreamField = await Promise.all(result.rows.map(async (comment) => {
       const query = 'SELECT * FROM comments WHERE id = $1;';
       const result = await client.query(query, [comment.id]);
       return result.rows[0];
     }));
-      while (dreamField.length < 50){
+      while (dreamField.length < dreamfieldWidth){
         dreamField.push({text:'random', video_id:0});
       }
       return dreamField;
   };
+
+  function addToDreamfield(statements) {
+    statements.forEach(statement => {
+      
+    });
+  }
 
   app.get('/', (request, response) => {
     try {
@@ -109,7 +115,7 @@
 
   app.get('/watch', (request, response) => {
     try {
-      response.render('watch', {videoId: request.query.id || 0, dreamField:getDreamField()});
+      getDreamField().then(dreamfield => response.render('watch', {videoId: request.query.id || 0, dreamField: dreamfield}));
     } catch (error) {
       handleError(response, error);
     }

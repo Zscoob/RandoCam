@@ -5,10 +5,7 @@
   <script defer src="index.js"></script>
   <title>RandoCam</title>
 </head>
-<% dreamField.forEach((comment, index) => { %>
-  <a class='dreamfield1 <%= index % 10 %>' href='/watch?id=<%=comment.video_id%>'><%= comment.text.toLowerCase() %></a>
-  <a class='dreamfield2 <%= index % 10 %>' href='/watch?id=<%=comment.video_id%>'><%= comment.text.toLowerCase() %></a>
-<% }); %>
+<%- include('partials/dreamfield') %>
 <body>
   <%- include('partials/header') %>
   <section id="content">
