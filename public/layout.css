@@ -13,6 +13,30 @@
   z-index: 1000;
 }
 
+#footer {
+  padding-top: .5%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 3vh;
+  background: rgb(116, 25, 168);
+  z-index: 1000;
+  font-size: 150%;
+  text-align: center;
+  color: honeydew;
+}
+
+#footer a {
+  text-decoration: none;
+  color: honeydew;
+}
+
+#copyright {
+  position: absolute;
+  left: 2%;
+}
+
 #content {
   transform: translateY(15vh);
   text-align: center;
@@ -81,10 +105,12 @@ h3.page-title {
 #dream a{
   grid-column: span 1;
   grid-row: span 1;
-  color: rgb(116, 25, 168);
+  color: rgb(146, 68, 0); /*rgb(100, 40, 25); /*rgb(116, 25, 168)*/
+  font-weight: 900;
   text-decoration: none;
-  font-size: 25px;
-  text-shadow: 5px 6px 5px #666;
+  font-size: 15px;
+  /*text-shadow: 0px 0px 15px #666;*/
+  font-family: 'Comfortaa', cursive;
 }
 
 @keyframes dream {

@@ -6,6 +6,8 @@
   width: 60vw;
   background-color: #222222;
   pointer-events: all;
+  box-shadow: 0 0 10px BLACK;
+  border-radius: 15px;
 }
 
 .video-player:last-child {
@@ -24,7 +26,7 @@
   margin-bottom: 1%;
 }
 
-.video-player button.refresh, .video-player button.like, .comment-form input[type=submit]{
+.video-player button.refresh, .video-player button.like, .comment-form input[type=submit], .view-button{
   padding: 0% 5% 0% 5%;
   background-color:  #7F7F7F;
   color: honeydew;
@@ -76,7 +78,7 @@ float: right;
 }
 .comment-form {
   text-align: left;
-
+  margin-bottom: 5%;
 }
 
 p.like-counter{
@@ -94,4 +96,27 @@ p.like-counter{
   max-height: 100vw;
   min-height: 55vmin;
   margin: 0 auto;
+}
+
+article.comment {
+  margin-bottom: 5%;
+  border-radius: 15px;
+  padding: 1.5%;
+  display: block;
+  border: 1px solid honeydew;
+}
+article p.comment {
+  float: left;
+  font-size: 200%;
+}
+
+article p.handle {
+  font-style: italic;
+  color: #DFDFDF;
+  float: right;
+  font-size: 150%;
+}
+
+article div.handle.container {
+  margin-bottom: 2%;
 }

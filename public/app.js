@@ -44,9 +44,13 @@ function createWebcamViewer(webcam, showButtons = false) {
 function createCommentTag(comment) {
   return $(`
   <article class='comment'>
-    <p class='comment'>${comment.text}</p>
+    <div class='comment container'>
+      <p class='comment'>${comment.text}</p>
+    </div>
     <br>
-    <p class='handle'>${comment.handle}</p>
+    <div class='handle container'>
+      <p class='handle'>-${comment.handle}</p>
+    </div>
   </article>`);
 }
 

@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <%- include('partials/head') %>
-  <script src='watch.js'></script>
-  <title>Watch</title>
+  <script defer src="index.js"></script>
+  <title>RandoCam</title>
 </head>
 <%- include('partials/dreamfield') %>
 <body>
   <%- include('partials/header') %>
-  <section id="content">
+  <section id="content" class='aboutus'>
+      <article>
+        <h2>Ur name</h2>
+        <img src='ur url'></img>
+        <p>Ur stuff</p>
+      </article>
   </section>
   <%- include('partials/footer') %>
 </body>
-<script defer>
-  <% if (Number(videoId) === 0) { %>
-    showRandom();
-  <% } else { %>
-    show('<%= videoId %>');
-  <% } %>
-</script>
-
 </html>
