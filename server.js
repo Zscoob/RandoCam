@@ -161,7 +161,7 @@
     try {
       const query = 'INSERT INTO comments (video_id, text, handle, timeStamp) VALUES($1, $2, $3, $4) RETURNING id;';
       client.query(query, [request.params.videoId, request.body.comment, request.body.handle, Date.now()]).then(result=> {
-        if (request.body.comment.match(/^([\w\d]+\s?){1,3}$/i)){
+        if (request.body.comment.match(/^(*+\s?){1,3}$/i)){
           const query = 'INSERT INTO dreamField (id) VALUES ($1);';
           client.query(query, [result.rows[0].id]);  
         }
