@@ -94,7 +94,7 @@
       return result.rows[0];
     }));
       while (dreamField.length < dreamfieldWidth){
-        dreamField.push({text:'random', video_id:0});
+        dreamField.unshift({text:'random', video_id:0});
       }
       return dreamField;
   };
