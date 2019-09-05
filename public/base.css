@@ -22,3 +22,9 @@ h3.page-title {
 .hidden {
   display: none;
 }
+#nav a{
+  color: white;
+  font-size: 250%;
+  text-decoration: none;
+  margin-left: 5%;
+}

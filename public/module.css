@@ -23,7 +23,7 @@
   margin-bottom: 1%;
 }
 
-.video-player button.refresh {
+.video-player button.refresh, .video-player button.like {
   padding: 4%;
   background-color: #010101;
   color: #AFAFAF;
@@ -38,4 +38,16 @@
   color: #FFFFFF;
   text-shadow: 0 0 5px #0F0;
   font-size: 275%;
+}
+
+/*<form class='comment-form'>
+  <input type='text' name='comment' placeholder='Leave a comment...'>
+  <input type='text' name='handle' placeholder='Name...'>
+  <input type='submit' name='submit' value='Submit'>
+</form>*/
+
+.comment-form input[name='comment']{
+  width: 75%;
+  height: 5vh;
+  text-align: left;
 }
