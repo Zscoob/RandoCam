@@ -120,3 +120,27 @@ article p.handle {
 article div.handle.container {
   margin-bottom: 2%;
 }
+.aboutus{
+  display: grid;
+  grid-template: repeat(2, 1fr)/repeat(2, 1fr);
+  height: 80vh;
+  width: 100vw;
+  
+}
+
+.aboutus article{
+  background-color: #222222;
+  width: 66%;
+  height: 66.6%;
+  margin:auto;
+  padding: 3%;
+  box-shadow: 0 0 10px black;
+  border-radius: 15px;
+  text-align: center;
+  padding-bottom: 10%;
+}
+
+.aboutus h2{
+  font-family: creepycrawlers;
+  font-size: 30px;
+}
