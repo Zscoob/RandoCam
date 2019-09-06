@@ -24,3 +24,22 @@ h3.page-title {
 .hidden {
   display: none;
 }
+
+.avatar {
+  display: block;
+  width: 15vmax;
+  height: 15vmax;
+  border-radius: 100%;
+  overflow:  hidden;
+  margin: 0 auto;
+}
+
+.avatar img {
+  width: 20vmax;
+  margin: auto;
+  transform: translateX(-10%);
+}
+
+.avatar div.scott {
+  transform: translate3d( 0 , -20% , 0 ) !important;
+}
