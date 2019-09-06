@@ -6,6 +6,8 @@ CREATE TABLE webcams (
   likes INTEGER DEFAULT 0
 );
 
+INSERT INTO webcams (id, title, likes) VALUES(0, 'random', 0);
+
 CREATE TABLE comments(
   id SERIAL PRIMARY KEY,
   video_id INTEGER NOT NULL REFERENCES webcams(id),

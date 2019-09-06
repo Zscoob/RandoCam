@@ -102,11 +102,25 @@
     }
     return dreamField;
   };
-
-  function addToDreamfield(statements) {
-    statements.forEach(statement => {
-
-    });
+  
+  class Comment {
+    constructor (comment, videoId = 0, handle = 'Anonymous') {
+      this.comment = comment;
+      this.videoId = videoId;
+      this.handle = handle;
+    }
+    saveComment() {
+      const query = 'INSERT INTO comments (video_id, text, handle, timeStamp) VALUES($1, $2, $3, $4) RETURNING id;';
+      client.query(query, [this.videoId, this.comment, this.handle, Date.now()]).then(result => {
+        if (this.comment.match(/^.{1,15}$/i)) {
+          console.log('Added to dreamfield');
+          const query = 'INSERT INTO dreamField (id) VALUES ($1);';
+          client.query(query, [result.rows[0].id]);
+        } else {
+          console.log(`Not adding ${result.rows[0].id} to dreamfield...`);
+        }
+      });
+    }
   }
 
   app.get('/', (request, response) => {
@@ -171,16 +185,7 @@
 
   app.post('/comment/:videoId', (request, response) => {
     try {
-      const query = 'INSERT INTO comments (video_id, text, handle, timeStamp) VALUES($1, $2, $3, $4) RETURNING id;';
-      client.query(query, [request.params.videoId, request.body.comment, request.body.handle, Date.now()]).then(result => {
-        if (request.body.comment.match(/^.{1,15}$/i)) {
-          console.log('Added to dreamfield');
-          const query = 'INSERT INTO dreamField (id) VALUES ($1);';
-          client.query(query, [result.rows[0].id]);
-        } else {
-          console.log(`Not adding ${result.rows[0].id} to dreamfield...`);
-        }
-      });
+      new Comment(request.body.comment, request.params.videoId, request.body.handle).saveComment();
       response.status(201).send();
     } catch (error) {
       handleError(response, error);
