@@ -66,6 +66,23 @@
     return webcams;
   };
 
+  const getWebcamFromAPI = async (id) => {
+    const val = await superagent
+        .get(`https://webcamstravel.p.rapidapi.com/webcams/list/webcam=${id}`)
+        .query({
+          'lang': 'en',
+          'show': 'webcams:image,player'
+        })
+        .set({
+          'x-rapidapi-host': 'webcamstravel.p.rapidapi.com',
+          'x-rapidapi-key': process.env.API_KEY
+        });
+    if (val.body.result.webcams) {
+      savecams([val.body.result.webcams[0]]);
+    }
+    return val.body.result.webcams[0];
+  }
+
   async function getWebcamsFromDB(count = 3) {
     const query = 'SELECT * FROM webcams ORDER BY likes DESC LIMIT $1;';
     const results = await client.query(query, [count]);
@@ -96,7 +113,6 @@
       const result = await client.query(query, [comment.id]);
       return result.rows[0];
     }));
-    console.log(`Fetched ${dreamField.length} comments from DB`);
     while (dreamField.length < dreamfieldWidth) {
       dreamField.unshift({ text: 'random', video_id: 0 });
     }
@@ -112,12 +128,9 @@
     saveComment() {
       const query = 'INSERT INTO comments (video_id, text, handle, timeStamp) VALUES($1, $2, $3, $4) RETURNING id;';
       client.query(query, [this.videoId, this.comment, this.handle, Date.now()]).then(result => {
-        if (this.comment.match(/^.{1,15}$/i)) {
-          console.log('Added to dreamfield');
+        if (this.comment.match(/^.{1,20}$/i)) {
           const query = 'INSERT INTO dreamField (id) VALUES ($1);';
           client.query(query, [result.rows[0].id]);
-        } else {
-          console.log(`Not adding ${result.rows[0].id} to dreamfield...`);
         }
       });
     }
@@ -161,9 +174,15 @@
         }));
       } else {
         getWebcamFromDB(request.params.id).then(([webcam]) => {
-          attachComments(webcam).then(webcam => {
-            response.send(webcam);
-          });
+          if (!webcam) {
+            getWebcamFromAPI(request.params.id).then(webcam => {
+              attachComments(webcam).then(webcam => response.send(webcam));
+            });
+          } else {
+            attachComments(webcam).then(webcam => {
+              response.send(webcam);
+            });
+          }
         });
       }
     } catch (error) {

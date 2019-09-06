@@ -1,29 +1,3 @@
-DROP TABLE IF EXISTS webcams, comments, dreamField, blackList;
-
-CREATE TABLE webcams (
-  id INTEGER PRIMARY KEY,
-  title VARCHAR(255),
-  likes INTEGER DEFAULT 0
-);
-
-INSERT INTO webcams (id, title, likes) VALUES(0, 'random', 0);
-
-CREATE TABLE comments(
-  id SERIAL PRIMARY KEY,
-  video_id INTEGER NOT NULL REFERENCES webcams(id),
-  text VARCHAR(200),
-  handle VARCHAR(20),
-  timeStamp BIGINT
-);
-
-CREATE TABLE dreamField(
-  id INTEGER NOT NULL REFERENCES comments(id)
-);
-
-CREATE TABLE blackList(
-  video_id INTEGER NOT NULL REFERENCES webcams(id)
-);
-
 INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'Lorem', 'Anonymous', 0); INSERT INTO dreamfield (id) VALUES(0);
 INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'ipsum', 'Anonymous', 1); INSERT INTO dreamfield (id) VALUES(1);
 INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'Mel', 'Anonymous', 2); INSERT INTO dreamfield (id) VALUES(2);
@@ -220,7 +194,7 @@ INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'dredgers', '
 INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'key', 'Anonymous', 193); INSERT INTO dreamfield (id) VALUES(193);
 INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'yellow', 'Anonymous', 194); INSERT INTO dreamfield (id) VALUES(194);
 INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'tail', 'Anonymous', 195); INSERT INTO dreamfield (id) VALUES(195);
-INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'lays', 'Anonymous', 196); INSERT INTO dreamfield (id) VALUES(196);
+INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'gay', 'Anonymous', 196); INSERT INTO dreamfield (id) VALUES(196);
 INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'fishing', 'Anonymous', 197); INSERT INTO dreamfield (id) VALUES(197);
 INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'conch', 'Anonymous', 198); INSERT INTO dreamfield (id) VALUES(198);
 INSERT INTO comments (video_id, text, handle, timeStamp) VALUES(0, 'republic', 'Anonymous', 199); INSERT INTO dreamfield (id) VALUES(199);

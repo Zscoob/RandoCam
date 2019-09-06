@@ -3,7 +3,7 @@ function createWebcamViewer(webcam, showButtons = false) {
   const $viewer = $(`<section class='video-player'>
   <h3>${webcam.title}</h3>
   <section class='videoContent'>
-  <iframe src="http://stream.webcams.travel/${webcam.id}" sandbox="allow-same-origin allow-scripts allow-forms" allowfullscreen width=800px height=600px></iframe>
+  <iframe src="http://stream.webcams.travel/${webcam.id}" sandbox="allow-same-origin allow-scripts allow-forms" allowfullscreen width=800px></iframe>
   <p class='like-counter'></p>
   </section>
 </section>`);
@@ -34,7 +34,7 @@ function createWebcamViewer(webcam, showButtons = false) {
     $viewbutton.click(() => {
       window.location = `/watch?id=${webcam.id}`;
     });
-    $viewer.append($viewbutton);
+    $viewer.children('.videoContent').append($viewbutton);
   }
   const likes = webcam.likes || 0;
   $viewer.find('.like-counter').text(`${likes} likes`);
