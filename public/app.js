@@ -3,7 +3,7 @@ function createWebcamViewer(webcam, showButtons = false) {
   const $viewer = $(`<section class='video-player'>
   <h3>${webcam.title}</h3>
   <section class='videoContent'>
-  <iframe src="http://stream.webcams.travel/${webcam.id}" sandbox="allow-same-origin allow-scripts allow-forms" allowfullscreen width=800px></iframe>
+  <iframe src="https://stream.webcams.travel/${webcam.id}" sandbox="allow-same-origin allow-scripts allow-forms" allowfullscreen width=800px></iframe>
   <p class='like-counter'></p>
   </section>
 </section>`);
@@ -68,7 +68,7 @@ function setupEvents($viewer) {
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', (event) => {
       const webcam = JSON.parse(event.target.response)[0];
-      $iframe.attr('src', `http://stream.webcams.travel/${webcam.id}`);
+      $iframe.attr('src', `https://stream.webcams.travel/${webcam.id}`);
       $title.text(webcam.title);
       $hiddenInput.val(webcam.id);
       $like.prop('disabled', false);
