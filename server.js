@@ -169,7 +169,7 @@
           });
         });
       } else if (request.params.id === 'top') {
-        getWebcamsFromDB(3).then(webcams => attachCommentsToMultiple(webcams).then(webcams => {
+        getWebcamsFromDB(7).then(webcams => attachCommentsToMultiple(webcams).then(webcams => {
           response.send(webcams);
         }));
       } else {
