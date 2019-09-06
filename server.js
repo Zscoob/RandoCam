@@ -150,19 +150,16 @@
   app.get('/webcam/:id', (request, response) => {
     try {
       if (request.params.id === 'random') {
-        console.log('Fetching random');
         getWebcams(request.query.count || 1).then((webcams) => {
           attachCommentsToMultiple(webcams).then(results => {
             response.send(results);
           });
         });
       } else if (request.params.id === 'top') {
-        console.log('Fetching top');
         getWebcamsFromDB(3).then(webcams => attachCommentsToMultiple(webcams).then(webcams => {
           response.send(webcams);
         }));
       } else {
-        console.log('Fetching from DB');
         getWebcamFromDB(request.params.id).then(([webcam]) => {
           attachComments(webcam).then(webcam => {
             response.send(webcam);

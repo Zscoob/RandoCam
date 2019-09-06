@@ -14,7 +14,8 @@
 }
 
 #footer {
-  padding-top: .5%;
+  padding-top: .15%;
+  padding-bottom: .15%;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -25,6 +26,7 @@
   font-size: 150%;
   text-align: center;
   color: honeydew;
+  font-family: creepycrawlers;
 }
 
 #footer a {

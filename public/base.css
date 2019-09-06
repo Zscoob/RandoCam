@@ -20,6 +20,7 @@ h3.page-title {
 #content {
   padding-bottom: 5%;
   color: honeydew;
+  margin: 10% 0;
 }
 .hidden {
   display: none;
@@ -37,9 +38,16 @@ h3.page-title {
 .avatar img {
   width: 20vmax;
   margin: auto;
+}
+
+.avatar img:not(.scott):not(.steven) {
+  transform: translateX(-10%) scale(1.25);
+}
+
+.avatar img.steven {
   transform: translateX(-10%);
 }
 
-.avatar div.scott {
-  transform: translate3d( 0 , -20% , 0 ) !important;
+.avatar img.scott {
+  transform: translateY(-25%);
 }
