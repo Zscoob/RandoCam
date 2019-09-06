@@ -59,7 +59,7 @@
           'x-rapidapi-key': process.env.API_KEY
         });
       //Ried im Traunkreis: A09, bei Anschlussstelle Ried i. Traunkreis, Blickrichtung Knoten Voralpenkreuz − Km 5,40
-      const filteredCams = val.body.result.webcams.filter((webcam) => !webcam.title.match(/[\d\w\s\.]+: \w\d+,[\w\d\s\.\,]+.*− Km \d+,\d+/));
+      const filteredCams = val.body.result.webcams.filter((webcam) => !webcam.title.match(/([\d\w\s\.]+: \w\d+,[\w\d\s\.\,]+.*− Km \d+,\d+)|([Ss]tavropol:*)/));
       webcams.push(...filteredCams);
     }
     savecams(webcams);
