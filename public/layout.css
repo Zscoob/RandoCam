@@ -57,7 +57,7 @@
   text-decoration: none;
   margin-left: 5%;
 }
-@media (max-width:486px){
+@media (max-width: 1024px){
   #nav {
     background-color: #000;
     width: 100vw;

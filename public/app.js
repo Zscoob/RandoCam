@@ -97,9 +97,9 @@ function setupEvents($viewer) {
   $commentForm.submit((event) => {
     event.preventDefault();
     const comment = $commentForm.children('input[name=comment]').val();
-    const handle = $commentForm.children('input[name=handle]').val();
-    if(!comment || !handle){
-      alert('Comment form empty');
+    let handle = $commentForm.children('input[name=handle]').val() || 'Anonymous';
+    if(!comment){
+      alert('You must enter a comment to submit.');
       return;
     }
     const xhr = new XMLHttpRequest();
