@@ -1,10 +1,11 @@
 body {
-  color:lawngreen;
-  background-color: #7F7F7F;
+  background-color: #DFDFDF;
 }
 
 #header {
   background-color: black;
+  font-family: creepycrawlers;
+  box-shadow: 0 0 15px black;
 }
 
 #header h1 {
@@ -18,4 +19,35 @@ h3.page-title {
 
 #content {
   padding-bottom: 5%;
+  color: honeydew;
+  margin: 5% 0;
+}
+.hidden {
+  display: none;
+}
+
+.avatar {
+  display: block;
+  width: 15vmax;
+  height: 15vmax;
+  border-radius: 100%;
+  overflow:  hidden;
+  margin: 0 auto;
+}
+
+.avatar img {
+  width: 20vmax;
+  margin: auto;
+}
+
+.avatar img:not(.scott):not(.steven) {
+  transform: translateX(-10%) scale(1.25);
+}
+
+.avatar img.steven {
+  transform: translateX(-10%);
+}
+
+.avatar img.scott {
+  transform: translateY(-25%);
 }

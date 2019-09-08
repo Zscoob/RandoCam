@@ -4,11 +4,13 @@
   <%- include('partials/head') %>
   <title>Error</title>
 </head>
+<%- include('partials/dreamfield') %>
 <body>
   <%- include('partials/header') %>
   <section id="content">
       <h3 class="page-title"> <%= status %> </h3>
       <%= error %>
   </section>
+  <%- include('partials/footer') %>
 </body>
 </html>

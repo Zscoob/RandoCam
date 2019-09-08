@@ -1,27 +1,191 @@
+:root {
+  --oscillation-height: 5vh;
+  --shadow-color: white;
+}
+
 #header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 10vh;
-  background-color: black;
+  height: 15vh;
+  background: rgb(116, 25, 168);
   z-index: 1000;
 }
 
-#content {
-  transform: translateY(10vh);
+#footer {
+  padding-top: .15%;
+  padding-bottom: .15%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 3vh;
+  background: rgb(116, 25, 168);
+  z-index: 1000;
+  font-size: 150%;
   text-align: center;
+  color: honeydew;
+  font-family: creepycrawlers;
 }
 
+#footer a {
+  text-decoration: none;
+  color: honeydew;
+}
+
+#copyright {
+  position: absolute;
+  left: 2%;
+}
+
+#content {
+  transform: translateY(15vh);
+  text-align: center;
+  pointer-events: none;
+}
 #nav {
   float: right;
+  width: 30vw;
+  text-align: right;
+  margin-top:5.5vh;
+  margin-right: 4%;
+}
+#nav a{
+  color: honeydew;
+  font-size: 6vh;
+  text-decoration: none;
+  margin-left: 5%;
+}
+@media (max-width: 1024px){
+  #nav {
+    background-color: #000;
+    width: 100vw;
+    text-align: center;
+    margin-top:-5px;
+    margin-right:0;
+    height:5vh;
+  }
+  #nav a{
+    font-size: 4vh;
+  }
+  #header{
+    text-align:center;
+  }
+  #content{
+    transform: translateY(20vh)
+  }
 }
 
-h1 {
-  font-size: 300%;
+
+img#logo {
+  width: 35vh;
+  margin: 0 auto;
+  max-height: 100%;
 }
 
 h3.page-title {
   min-width: 100%;
   font-size: 150%;
+}
+
+#dream {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 100vh;
+  display: grid;
+  grid-template: repeat(15, 1fr) / repeat(30, 1fr);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: dreamWithOscillation;
+  animation-duration: 60000ms;
+  z-index: 0;
+}
+
+#dream a{
+  grid-column: span 1;
+  grid-row: span 1;
+  color: rgb(146, 68, 0); /*rgb(100, 40, 25); /*rgb(116, 25, 168)*/
+  font-weight: 900;
+  text-decoration: none;
+  font-size: 15px;
+  /*text-shadow: 0px 0px 15px #666;*/
+  font-family: 'Comfortaa', cursive;
+}
+
+@keyframes dream {
+0% {
+  transform: translateX(0);
+}
+100% {
+  transform: translateX(-100vw);
+}
+}
+
+@keyframes dreamWithOscillation {
+0% {
+  transform: translateX(00);
+}
+5% {
+  transform: translate3d(-5vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+10% {
+  transform: translate3d(-10vw, var(--oscillation-height), 0);
+}
+15% {
+  transform: translate3d(-15vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+20% {
+  transform: translate3d(-20vw, 0vh, 0);
+}
+25% {
+  transform: translate3d(-25vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+30% {
+  transform: translate3d(-30vw, var(--oscillation-height), 0);
+}
+35% {
+  transform: translate3d(-35vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+40% {
+  transform: translate3d(-40vw, 0vh, 0);
+}
+45% {
+  transform: translate3d(-45vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+50% {
+  transform: translate3d(-50vw, var(--oscillation-height), 0);
+}
+55% {
+  transform: translate3d(-55vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+60% {
+  transform: translate3d(-60vw, 0vh, 0);
+}
+65% {
+  transform: translate3d(-65vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+70% {
+  transform: translate3d(-70vw, var(--oscillation-height), 0);
+}
+75% {
+  transform: translate3d(-75vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+80% {
+  transform: translate3d(-80vw, 0vh, 0);
+}
+85% {
+  transform: translate3d(-85vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+90% {
+  transform: translate3d(-90vw, var(--oscillation-height), 0);
+}
+95% {
+  transform: translate3d(-95vw, calc(0.5 * var(--oscillation-height)), 0);
+}
+100% {
+  transform: translate3d(-100vw, 0vh, 0);
+}
 }
